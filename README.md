@@ -1,31 +1,32 @@
 # BLUE DELTA
 
-Site vitrine et catalogue automobile/BTP et industrie, avec 11 fiches produits, panier et préparation de commande sur WhatsApp ou par e-mail.
+Site vitrine et boutique BLUE DELTA, publié sur [bluedelta.dz](https://bluedelta.dz/). Le catalogue compte 11 références initiales à 3 000 DA. Le panier et la page de commande enregistrent les demandes dans Firebase Cloud Firestore ; aucun paiement en ligne n'est prélevé. La livraison, la disponibilité et le paiement sont confirmés avec BLUE DELTA.
 
-## Démarrer
+## Développement et publication
 
-Node.js suffit, sans installation de dépendances.
+Node.js suffit, sans dépendances à installer :
 
 ```sh
 npm run build
 npm run dev
 ```
 
-L’aperçu est disponible sur `http://127.0.0.1:4173/`.
+Le site local est disponible sur `http://127.0.0.1:4173/`. La génération écrit les pages, scripts et images dans `dist/`, qui est publié par GitHub Pages. Les liens sont absolus depuis la racine de `bluedelta.dz` ; `dist/CNAME` conserve le domaine personnalisé.
+
+## Gestion
+
+L'administration se trouve à `/admin/`. Firebase Authentication utilise l'e-mail et le mot de passe, sans validation de l'adresse e-mail. Les règles de `firestore.rules` limitent l'accès aux commandes, demandes de partenariat et modifications de produits à l'UID administrateur. Les identifiants ne sont pas conservés dans ce dépôt.
+
+L'admin peut ajouter, modifier et supprimer des références, définir la catégorie (Automobile & BTP ou Industrie), le prix, la photo et le stock. Un stock non renseigné est affiché comme tel ; un stock de zéro bloque l'ajout au panier. Les commandes et demandes de partenariat sont affichées dans deux sections distinctes, avec détail et suivi de statut.
+
+Les deux formulaires publics enregistrent les demandes dans Firestore. La base est hébergée dans la région `europe-southwest1` (Madrid). `src/firebase-client.js` contient uniquement la configuration publique de l'application Web Firebase. La sécurité repose sur Authentication et les règles Firestore publiées, et non sur le secret de cette configuration.
 
 ## Contenu
 
-- `catalog.mjs` : produits, prix en DZD et caractéristiques.
-- `build.mjs` : génération des 21 pages HTML et métadonnées.
-- `dist/` : site complet et images, prêt à servir avec un hébergement statique.
-- `dist/app.js` : panier local, filtres et formulaires.
-- `dist/styles.css` : présentation responsive.
-- `communes-source.json` : données publiques des wilayas et communes, provenant de https://github.com/othmanus/algeria-cities.
+- `catalog.mjs` : produits de départ, prix et caractéristiques.
+- `build.mjs` et `prepare-pages.mjs` : génération des pages et copie des ressources.
+- `src/` : scripts et styles maintenables, y compris le diaporama, les formulaires et l'admin.
+- `dist/` : site statique publié.
+- `communes-source.json` : wilayas et communes d'Algérie, à partir de [algeria-cities](https://github.com/othmanus/algeria-cities).
 
-Les prix sont actuellement fixés à 3 000 DA par unité. Les frais de livraison et modalités de paiement sont confirmés par BLUE DELTA. Les formulaires préparent un message que le visiteur doit envoyer : aucun paiement en ligne ni stockage serveur des commandes.
-
-## Hébergement
-
-Le site est publié à la racine de `https://bluedelta.dz/` par GitHub Pages. La commande `npm run build` génère les liens internes, les URL canoniques et le sitemap pour ce domaine. Le fichier `dist/CNAME` conserve la configuration du domaine personnalisé dans l’artefact publié.
-
-Les retouches HD de certaines photos restent à finaliser ; les photos d’origine correspondantes sont conservées. Le logo transparent et les visuels générés pour l’accueil et les deux catégories sont inclus.
+Les stocks réels n'ont pas été fournis et restent non renseignés jusqu'à leur saisie par BLUE DELTA. Pour changer d'administrateur, mettre à jour l'UID autorisé dans `firestore.rules` et publier les règles dans Firebase avant de retirer le compte actuel.

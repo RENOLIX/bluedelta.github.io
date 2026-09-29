@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == '7Q26B4VGTXddJo9O6rmmOiOhwka2';
+    }
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    match /orders/{orderId} {
+      allow create: if request.resource.data.keys().hasOnly(['name','phone','company','email','wilaya','commune','address','message','items','total','source','status','createdAt'])
+        && request.resource.data.status == 'nouvelle'
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.name is string && request.resource.data.name.size() > 1 && request.resource.data.name.size() <= 100
+        && request.resource.data.phone is string && request.resource.data.phone.size() >= 8 && request.resource.data.phone.size() <= 18
+        && request.resource.data.address is string && request.resource.data.address.size() >= 8 && request.resource.data.address.size() <= 250
+        && request.resource.data.items is list && request.resource.data.items.size() > 0 && request.resource.data.items.size() <= 50
+        && request.resource.data.total is number && request.resource.data.total >= 0;
+      allow read, update, delete: if isAdmin();
+    }
+    match /partnerships/{requestId} {
+      allow create: if request.resource.data.keys().hasOnly(['name','company','phone','email','activity','volume','wilaya','commune','products','message','status','createdAt'])
+        && request.resource.data.status == 'nouvelle'
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.name is string && request.resource.data.name.size() > 1 && request.resource.data.name.size() <= 100
+        && request.resource.data.company is string && request.resource.data.company.size() > 1 && request.resource.data.company.size() <= 120
+        && request.resource.data.phone is string && request.resource.data.phone.size() >= 8 && request.resource.data.phone.size() <= 18
+        && request.resource.data.products is list && request.resource.data.products.size() > 0 && request.resource.data.products.size() <= 50;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
