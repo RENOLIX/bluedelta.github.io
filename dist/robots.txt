@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /commande/
+Disallow: /panier/
+Sitemap: https://blue-delta-dz.earthy-lion-9176.chatgpt.site/sitemap.xml
