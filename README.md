@@ -15,7 +15,7 @@ Le site local est disponible sur `http://127.0.0.1:4173/`. La génération écri
 
 ## Gestion
 
-L'administration se trouve à `/admin/`. Firebase Authentication utilise l'e-mail et le mot de passe, sans validation de l'adresse e-mail. Les règles de `firestore.rules` limitent l'accès aux commandes, demandes de partenariat et modifications de produits à l'UID administrateur. Les identifiants ne sont pas conservés dans ce dépôt.
+L'administration se trouve à `/admin/`. Firebase Authentication utilise l'e-mail et le mot de passe, sans validation de l'adresse e-mail. Le compte principal peut créer d'autres utilisateurs administrateurs et révoquer leur accès. Les règles de `firestore.rules` protègent les commandes, les demandes de partenariat et les modifications de produits. La révocation supprime le rôle Firestore ; pour effacer aussi l'identité Firebase Authentication, utilisez la console Firebase. Les identifiants ne sont pas conservés dans ce dépôt.
 
 L'admin peut ajouter, modifier et supprimer des références, définir la catégorie (Automobile & BTP ou Industrie), le prix, la photo et le stock. Un stock non renseigné est affiché comme tel ; un stock de zéro bloque l'ajout au panier. Les commandes et demandes de partenariat sont affichées dans deux sections distinctes, avec détail et suivi de statut.
 
