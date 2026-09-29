@@ -1,5 +1,5 @@
 import fs from 'node:fs';import path from 'node:path';import {products} from './catalog.mjs';
-const out='dist',origin='https://blue-delta-dz.earthy-lion-9176.chatgpt.site';fs.mkdirSync(out+'/assets',{recursive:true});
+const out='dist',base=(process.env.SITE_BASE_PATH||'').replace(/\/$/,''),origin=process.env.SITE_ORIGIN||'https://renolix.github.io/bluedelta.github.io';fs.mkdirSync(out+'/assets',{recursive:true});
 const icons={cart:'<path d="M3 3h2l3 12h10l3-8H6M9 20h.01M18 20h.01"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',shield:'<path d="M12 3l8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6"/>',box:'<path d="M3 7l9-4 9 4v10l-9 4-9-4zM3 7l9 5 9-5M12 12v9M7 5l10 5"/>',phone:'<path d="M7 3l3 5-3 3c2 3 3 4 6 6l3-3 5 3c0 4-3 5-6 4C8 19 5 16 3 9 2 6 3 3 7 3z"/>',wa:'<path d="M21 11.5a9 9 0 0 1-13.5 7.8L3 21l1.7-4.5A9 9 0 1 1 21 11.5zM8 7c0 5 4 9 9 9l-2-3-2 1-3-3 1-2z"/>'};
 const icon=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[n]||icons.box}</svg>`;
 const money=n=>new Intl.NumberFormat('fr-DZ').format(n)+' DA';const cat=p=>p.cat==='auto'?'Automobile & BTP':'Industrie';const wa=t=>'https://wa.me/213770866417?text='+encodeURIComponent(t);const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;');
