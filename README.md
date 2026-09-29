@@ -26,6 +26,6 @@ Les prix sont actuellement fixés à 3 000 DA par unité. Les frais de livraison
 
 ## Hébergement
 
-Servir le dossier `dist/` à la racine d’un domaine ou sous-domaine. Pour GitHub Pages sous un chemin de projet, adapter les URL absolues du site à ce chemin avant activation. Mettre également à jour l’origine des liens canoniques et du sitemap dans `build.mjs`.
+Le site est publié à la racine de `https://bluedelta.dz/` par GitHub Pages. La commande `npm run build` génère les liens internes, les URL canoniques et le sitemap pour ce domaine. Le fichier `dist/CNAME` conserve la configuration du domaine personnalisé dans l’artefact publié.
 
 Les retouches HD de certaines photos restent à finaliser ; les photos d’origine correspondantes sont conservées. Le logo transparent et les visuels générés pour l’accueil et les deux catégories sont inclus.

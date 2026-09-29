@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /commande/
 Disallow: /panier/
-Sitemap: https://renolix.github.io/bluedelta.github.io/sitemap.xml
+Sitemap: https://bluedelta.dz/sitemap.xml

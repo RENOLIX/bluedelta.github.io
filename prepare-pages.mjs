@@ -13,3 +13,4 @@ if(base){
  fs.writeFileSync('dist/robots.txt',`User-agent: *\nAllow: ${base}/\nDisallow: ${base}/commande/\nDisallow: ${base}/panier/\nSitemap: ${process.env.SITE_ORIGIN}/sitemap.xml\n`);
 }
 fs.writeFileSync('dist/.nojekyll','');
+fs.writeFileSync('dist/CNAME','bluedelta.dz\n');
