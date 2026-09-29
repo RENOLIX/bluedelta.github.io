@@ -84,18 +84,23 @@ function renderProducts(){const q=$('#product-search-admin').value.toLowerCase()
 $('#product-search-admin').addEventListener('input',renderProducts);
 
 const modal=$('#product-modal'),productForm=$('#product-form');
-function openProduct(p){productForm.reset();$('#product-error').hidden=true;productForm.elements.id.value=p?.id||'';$('#product-modal-title').textContent=p?'Modifier le produit':'Ajouter un produit';for(const key of ['name','cat','subtitle','format','price','description','applications'])if(p)productForm.elements[key].value=p[key]??'';productForm.elements.stock.value=Number.isInteger(p?.stock)?p.stock:'';productForm.elements.active.checked=p?.active!==false;productForm.elements.imageUrl.value=p?.image?.startsWith('https://')?p.image:'';modal.hidden=false;document.body.style.overflow='hidden';productForm.elements.name.focus()}
-function closeProduct(){modal.hidden=true;document.body.style.overflow=''}
+let photoObjectUrl=null,photoRemoved=false;
+function clearPhotoObjectUrl(){if(photoObjectUrl){URL.revokeObjectURL(photoObjectUrl);photoObjectUrl=null}}
+function setPhotoPreview(src,label='Photo actuelle'){const preview=$('#product-photo-preview');preview.hidden=!src;if(src){$('#product-photo-thumb').src=src;$('#product-photo-label').textContent=label}else $('#product-photo-thumb').removeAttribute('src')}
+function openProduct(p){productForm.reset();clearPhotoObjectUrl();photoRemoved=false;$('#product-error').hidden=true;productForm.elements.id.value=p?.id||'';$('#product-modal-title').textContent=p?'Modifier le produit':'Ajouter un produit';for(const key of ['name','cat','subtitle','format','price','description','applications'])if(p)productForm.elements[key].value=p[key]??'';productForm.elements.stock.value=Number.isInteger(p?.stock)?p.stock:'';productForm.elements.active.checked=p?.active!==false;productForm.elements.imageUrl.value=p?.image?.startsWith('https://')?p.image:'';setPhotoPreview(p?.image?imageUrl(p):'');modal.hidden=false;document.body.style.overflow='hidden';productForm.elements.name.focus()}
+function closeProduct(){modal.hidden=true;document.body.style.overflow='';clearPhotoObjectUrl()}
 $('#new-product').addEventListener('click',()=>openProduct());
+productForm.elements.photo.addEventListener('change',()=>{clearPhotoObjectUrl();const file=productForm.elements.photo.files[0];if(file){photoRemoved=false;photoObjectUrl=URL.createObjectURL(file);setPhotoPreview(photoObjectUrl,'Nouvelle photo')}else{const original=productById(productForm.elements.id.value);setPhotoPreview(photoRemoved?'':original?.image?imageUrl(original):'')}});
+productForm.elements.imageUrl.addEventListener('input',()=>{const value=productForm.elements.imageUrl.value.trim();if(/^https?:\/\//.test(value)){productForm.elements.photo.value='';clearPhotoObjectUrl();photoRemoved=false;setPhotoPreview(value,'Photo par URL')}else if(!value&&productById(productForm.elements.id.value)?.image?.startsWith('https://')){photoRemoved=true;setPhotoPreview('')}});
+$('#remove-product-photo').addEventListener('click',()=>{clearPhotoObjectUrl();photoRemoved=true;productForm.elements.photo.value='';productForm.elements.imageUrl.value='';setPhotoPreview('')});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!modal.hidden)closeProduct()});
 function makeSlug(name){return name.normalize('NFD').replace(/\p{Diacritic}/gu,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'produit'}
 async function optimizedPhoto(file){const bitmap=await createImageBitmap(file),max=640,scale=Math.min(1,max/Math.max(bitmap.width,bitmap.height)),canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);const data=canvas.toDataURL('image/webp',.72);bitmap.close();if(data.length>650000)throw Error('Cette image est trop lourde. Choisissez une photo plus légère.');return data}
 productForm.addEventListener('submit',async event=>{
   event.preventDefault();const button=$('#save-product'),err=$('#product-error'),f=new FormData(productForm),original=productById(String(f.get('id')));err.hidden=true;button.disabled=true;button.textContent='Enregistrement…';
   try{
-    const name=String(f.get('name')).trim(),id=original?.id||makeSlug(name)+'-'+Date.now().toString(36).slice(-5);let image=original?.image||'';
+    const name=String(f.get('name')).trim(),id=original?.id||makeSlug(name)+'-'+Date.now().toString(36).slice(-5);let image=photoRemoved?'':original?.image||'';
     const file=productForm.elements.photo.files[0];if(file)image=await optimizedPhoto(file);else if(String(f.get('imageUrl')||'').trim())image=String(f.get('imageUrl')).trim();
-    if(!image)throw Error('Ajoutez une photo ou une URL d’image.');
     const stockRaw=String(f.get('stock')||'');const stock=stockRaw===''?null:Number(stockRaw);
     if(stock!==null&&(!Number.isInteger(stock)||stock<0))throw Error('Le stock doit être un nombre entier positif.');
     const data={...original,id,name,cat:String(f.get('cat')),subtitle:String(f.get('subtitle')||'').trim(),format:String(f.get('format')||'').trim(),price:Number(f.get('price')),stock,description:String(f.get('description')||'').trim(),applications:String(f.get('applications')||'').trim(),image,active:f.has('active'),position:original?.position??state.products.length};

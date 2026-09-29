@@ -99,11 +99,11 @@
 /* Hero à trois ambiances, avec défilement accessible. */
 .hero{background-image:none}
 .hero-slides,.hero-slide{position:absolute;inset:0}
-.hero-slide{opacity:0;background-size:cover;background-position:center;transition:opacity 1s ease}
+.hero-slide{opacity:0;background-size:cover;background-position:center;transition:opacity .6s ease}
 .hero-slide.active{opacity:1}
 .hero-slide:nth-child(1){background-image:url('/assets/hero.png')}
-.hero-slide:nth-child(2){background-image:url('/assets/hero-trucks.png')}
-.hero-slide:nth-child(3){background-image:url('/assets/hero-industry.png')}
+.hero-slide:nth-child(2){background-image:url('/assets/hero-trucks-v2.png')}
+.hero-slide:nth-child(3){background-image:url('/assets/hero-btp-v2.png')}
 .hero:before{z-index:1}
 .hero>.wrap{position:relative;z-index:2}
 .hero-dots{position:absolute;z-index:3;right:5%;bottom:22px;display:flex;gap:10px}
@@ -139,6 +139,8 @@
   .hero-dots{right:5%;bottom:9px}
   .hero-dot{width:18px;height:6px}.hero-dot.active{width:30px}
   .hero-slide{background-position:65% center}
+  .hero-slide:nth-child(2){background-position:70% center}
+  .hero-slide:nth-child(3){background-position:66% center}
   .partner-hero{min-height:465px;background-position:60% center}
   .partner-hero .wrap{padding:65px 0}.partner-hero p{font-size:15px}
   .partner-split,.partner-form-layout{grid-template-columns:1fr;gap:30px}

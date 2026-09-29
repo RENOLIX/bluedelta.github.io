@@ -22,9 +22,9 @@ const walkHtml=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})
   }
   if(file==='dist/index.html'){
     html=html.replace('<section class="hero"><div class="wrap">','<section class="hero"><div class="hero-slides" aria-hidden="true"><div class="hero-slide active"></div><div class="hero-slide"></div><div class="hero-slide"></div></div><div class="wrap">');
-    html=html.replace('</div></div></section><div class="strip">','</div></div><div class="hero-dots" role="group" aria-label="Choisir une ambiance"><button class="hero-dot active" type="button" aria-label="Image 1 : protection industrielle" aria-pressed="true"></button><button class="hero-dot" type="button" aria-label="Image 2 : distribution et camions" aria-pressed="false"></button><button class="hero-dot" type="button" aria-label="Image 3 : refroidissement industriel" aria-pressed="false"></button></div><script type="module" src="/hero.js"></script></section><div class="strip">');
+    html=html.replace('</div></div></section><div class="strip">','</div></div><div class="hero-dots" role="group" aria-label="Choisir une ambiance"><button class="hero-dot active" type="button" aria-label="Image 1 : protection industrielle" aria-pressed="true"></button><button class="hero-dot" type="button" aria-label="Image 2 : convoi de camions" aria-pressed="false"></button><button class="hero-dot" type="button" aria-label="Image 3 : engins de travaux publics" aria-pressed="false"></button></div><script type="module" src="/hero.js?v=2"></script></section><div class="strip">');
   }
-  if(file==='dist/partenariat/index.html')html=html.replace('</main>','<script type="module" src="/partner.js"></script></main>');
+  if(file==='dist/partenariat/index.html')html=html.replace('</main>','<script type="module" src="/partner.js?v=2"></script></main>');
   fs.writeFileSync(file,html);
 }}};walkHtml('dist');
 if(base){
