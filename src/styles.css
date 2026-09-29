@@ -76,3 +76,22 @@
 .add-btn:active,.filter:active{box-shadow:inset 10px 10px 16px #cbd6e0,inset -10px -10px 16px #fff}
 .filter.active,.filter.active:hover{background:var(--navy);color:#fff;box-shadow:inset 5px 5px 9px #070e22,inset -5px -5px 9px #334468}
 .wa-float{box-shadow:inset 5px 5px 10px #0a5732,inset -5px -5px 10px #27ac6b}
+
+/* Les trois engagements reprennent le creux bleu marine du bloc de contact. */
+.strip{padding:18px 0}
+.strip .wrap{gap:16px}
+.strip-item,.strip-item:first-child,.strip-item:last-child{
+  min-height:108px;
+  padding:23px 26px;
+  border:0;
+  border-radius:18px;
+  background:var(--navy);
+  box-shadow:inset 9px 9px 19px #080f24,inset -9px -9px 19px #2b3d63;
+}
+.strip-item strong{font-size:15px}
+.strip-item p{color:#bed0e4;font-size:13px}
+@media(max-width:760px){
+  .strip{padding:14px 0}
+  .strip .wrap{gap:10px}
+  .strip-item,.strip-item:first-child,.strip-item:last-child{min-height:82px;padding:17px 22px}
+}
