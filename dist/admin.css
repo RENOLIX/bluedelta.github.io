@@ -1,4 +1,7 @@
 .admin-body{background:#f4f7fb;color:#1a2b46;font:14px/1.5 'DM Sans',Arial,sans-serif}
+.admin-loading{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#f4f7fb;color:#315271;font-weight:700}.admin-loading img{width:160px}.admin-loading span{font-size:13px}
+.admin-loading[hidden],.admin-login[hidden],.admin-shell[hidden]{display:none!important}
+.admin-delete-row{margin-top:28px;padding-top:18px;border-top:1px solid #e2e9f0}.admin-danger{color:#aa3447;border-color:#e6bac3}.admin-danger:hover{background:#fff1f3}
 .admin-body h1,.admin-body h2{font-family:'DM Sans',Arial,sans-serif;text-transform:none;letter-spacing:-.03em}
 .admin-body h1{font-size:32px}.admin-body h2{font-size:21px}.admin-kicker{color:#238fbe;font-size:11px;font-weight:800;letter-spacing:.13em}
 .admin-login{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 88% 12%,#0b689e 0,#0d2a50 32%,#0b1933 72%)}

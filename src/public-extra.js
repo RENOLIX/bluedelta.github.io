@@ -4,7 +4,7 @@ const $=selector=>document.querySelector(selector);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=value=>new Intl.NumberFormat('fr-DZ').format(Number(value)||0)+' DA';
 const local=await fetch('/products.json').then(r=>r.json());
-const products=await loadProducts(local);
+const products=await Promise.race([loadProducts(local),new Promise(resolve=>setTimeout(()=>resolve(local),5000))]);
 const byId=Object.fromEntries(products.map(p=>[p.id,p]));
 const detailUrl=p=>local.some(x=>x.id===p.id)?`/produits/${encodeURIComponent(p.id)}/`:`/produit/?id=${encodeURIComponent(p.id)}`;
 const photo=p=>esc(imageUrl(p));
@@ -23,7 +23,15 @@ if(grid){
     if(current)displayed=products.filter(p=>p.cat===current.cat&&p.id!==id).slice(0,4);
   }
   grid.innerHTML=displayed.map(card).join('');
-  if($('#catalog-grid'))$('#product-search')?.dispatchEvent(new Event('input'));
+  if($('#catalog-grid')){
+    const selected=new URLSearchParams(location.search).get('categorie');
+    const category=['auto','industrie'].includes(selected)?selected:'all';
+    let count=0;
+    grid.querySelectorAll('.product-card').forEach(el=>{el.hidden=category!=='all'&&el.dataset.cat!==category;if(!el.hidden)count++});
+    if($('#result-count'))$('#result-count').textContent=count+' produit'+(count>1?'s':'');
+    document.querySelectorAll('[data-filter]').forEach(button=>{button.classList.toggle('active',button.dataset.filter===category);button.setAttribute('aria-pressed',button.dataset.filter===category)});
+    $('#product-search')?.dispatchEvent(new Event('input'));
+  }
 }
 
 const oldId=location.pathname.match(/^\/produits\/([^/]+)\/$/)?.[1];
@@ -47,6 +55,8 @@ if($('#dynamic-detail')){
   $('#dynamic-detail').innerHTML=p?`<div class="wrap"><div class="breadcrumb"><a href="/">Accueil</a><span>/</span><a href="/produits/">Nos produits</a><span>/</span><span>${esc(p.name)}</span></div><section class="product-detail"><div class="detail-image"><span class="pill">${esc(p.tag||p.format||'Produit')}</span><img src="${photo(p)}" alt="${esc(p.name)} BLUE DELTA"></div><div class="detail-copy"><div class="eyebrow">${p.cat==='industrie'?'Industrie':'Automobile & BTP'}</div><h1>${esc(p.name)}</h1><p class="subtitle">${esc(p.subtitle||'')}</p><p class="desc">${esc(p.description||'')}</p><span class="format">${esc(p.format||'')}</span><div class="detail-price">${money(p.price)} <small>/ unité</small></div><p class="fine">Livraison et disponibilité à confirmer.</p><div class="purchase"><div class="quantity"><button type="button" data-qty-step="-1">−</button><input id="product-quantity" type="number" min="1" max="99" value="1" aria-label="Quantité"><button type="button" data-qty-step="1">+</button></div><button class="btn" data-add="${esc(p.id)}" data-detail ${isOut(p)?'disabled':''}>${isOut(p)?'Rupture de stock':'Ajouter au panier'}</button></div><a href="/contact/?produit=${encodeURIComponent(p.id)}" class="btn outline full">Demander un conseil</a></div></section></div><section class="section gray"><div class="wrap detail-sections"><div><h2>Applications</h2><p>${esc(p.applications||'Contactez notre équipe pour vérifier la compatibilité avec votre application.')}</p></div><div><h2>Informations produit</h2><table class="specs"><tr><th>Catégorie</th><td>${p.cat==='industrie'?'Industrie':'Automobile & BTP'}</td></tr><tr><th>Format</th><td>${esc(p.format||'À confirmer')}</td></tr><tr><th>Disponibilité</th><td>${isOut(p)?'Rupture de stock':'À confirmer avec BLUE DELTA'}</td></tr></table></div></div></section>`:'<div class="wrap empty"><h1>Produit introuvable</h1><p>Cette référence n’est plus disponible.</p><a href="/produits/" class="btn">Voir le catalogue</a></div>';
   if(p)document.title=p.name+' | BLUE DELTA';
 }
+
+document.documentElement.removeAttribute('data-products-pending');
 
 // La commande est réellement enregistrée avant d'afficher une confirmation.
 $('#checkout-form')?.addEventListener('submit',async event=>{

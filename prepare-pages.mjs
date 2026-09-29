@@ -18,13 +18,17 @@ const walkHtml=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})
   if(file!=='dist/admin/index.html'){
     html=html.replace('<a href="/applications/">Applications</a><a href="/a-propos/">','<a href="/applications/">Applications</a><a href="/partenariat/">Partenariat</a><a href="/a-propos/">');
     html=html.replace('<div><h3>BLUE DELTA</h3>','<div><h3>BLUE DELTA</h3><a href="/partenariat/">Partenariat & fournisseurs</a>');
-    html=html.replace('<script type="module" src="/app.js"></script>','<script type="module" src="/app.js?v=2"></script><script type="module" src="/public-extra.js?v=2"></script>');
+    html=html.replace('<script type="module" src="/app.js"></script>','<script type="module" src="/app.js?v=2"></script><script type="module" src="/public-extra.js?v=3"></script>');
+    if(file.startsWith('dist/produits/')||file==='dist/produit/index.html'){
+      html=html.replace('<html lang="fr">','<html lang="fr" data-products-pending>');
+      html=html.replace('</head>','<style>html[data-products-pending] main{visibility:hidden}</style><script>setTimeout(()=>document.documentElement.removeAttribute("data-products-pending"),7000)</script></head>');
+    }
   }
   if(file==='dist/index.html'){
     html=html.replace('<section class="hero"><div class="wrap">','<section class="hero"><div class="hero-slides" aria-hidden="true"><div class="hero-slide active"></div><div class="hero-slide"></div><div class="hero-slide"></div></div><div class="wrap">');
     html=html.replace('</div></div></section><div class="strip">','</div></div><div class="hero-dots" role="group" aria-label="Choisir une ambiance"><button class="hero-dot active" type="button" aria-label="Image 1 : protection industrielle" aria-pressed="true"></button><button class="hero-dot" type="button" aria-label="Image 2 : convoi de camions" aria-pressed="false"></button><button class="hero-dot" type="button" aria-label="Image 3 : engins de travaux publics" aria-pressed="false"></button></div><script type="module" src="/hero.js?v=2"></script></section><div class="strip">');
   }
-  if(file==='dist/partenariat/index.html')html=html.replace('</main>','<script type="module" src="/partner.js?v=2"></script></main>');
+  if(file==='dist/partenariat/index.html')html=html.replace('</main>','<script type="module" src="/partner.js?v=3"></script></main>');
   fs.writeFileSync(file,html);
 }}};walkHtml('dist');
 if(base){

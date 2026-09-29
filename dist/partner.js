@@ -2,7 +2,9 @@ import {loadProducts,submitPartnership,imageUrl} from './firebase-client.js';
 
 async function notifyWeb3Forms(payload,reference){
   const data=new FormData();
-  const fields={access_key:'ff2db899-0440-4431-8422-ad44b4061148',subject:`Nouvelle demande de partenariat BLUE DELTA — ${payload.company}`,from_name:'BLUE DELTA — Site web',replyto:payload.email,'Référence admin':reference,'Nom et prénom':payload.name,'Entreprise / enseigne':payload.company,'Téléphone':payload.phone,'E-mail':payload.email,'Activité':payload.activity,'Volume envisagé':payload.volume,'Wilaya':payload.wilaya,'Commune':payload.commune,'Produits souhaités':payload.products.map(p=>`${p.name} (${p.id})`).join(' ; '),'Projet / besoins':payload.message||'Non précisé','Consentement au traitement des données':'Oui'};
+  // Web3Forms may decode multipart field names as Latin-1. Keep labels ASCII;
+  // field values remain UTF-8 so names, communes and product names keep accents.
+  const fields={access_key:'ff2db899-0440-4431-8422-ad44b4061148',subject:`Nouvelle demande de partenariat BLUE DELTA - ${payload.company}`,from_name:'BLUE DELTA - Site web',replyto:payload.email,'Reference admin':reference,'Nom et prenom':payload.name,'Entreprise / enseigne':payload.company,'Telephone':payload.phone,'E-mail':payload.email,'Activite':payload.activity,'Volume envisage':payload.volume,'Wilaya':payload.wilaya,'Commune':payload.commune,'Produits souhaites':payload.products.map(p=>p.name).join(' ; '),'Projet / besoins':payload.message||'Non précisé','Consentement au traitement des donnees':'Oui'};
   for(const [key,value] of Object.entries(fields))data.append(key,value);
   const response=await fetch('https://api.web3forms.com/submit',{method:'POST',body:data});
   const result=await response.json();

@@ -1,4 +1,4 @@
-import {auth,ADMIN_UID,login,logout,watchAuth,hasAdminAccess,createAdminUser,revokeAdminUser,listCollection,saveProduct,removeProduct,updateRecord,imageUrl} from './firebase-client.js';
+import {auth,ADMIN_UID,login,logout,watchAuth,hasAdminAccess,createAdminUser,revokeAdminUser,listCollection,saveProduct,removeProduct,removePartnership,updateRecord,imageUrl} from './firebase-client.js?v=2';
 
 const $=selector=>document.querySelector(selector);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -23,7 +23,7 @@ $('#logout-button').addEventListener('click',()=>logout());
 watchAuth(async user=>{
   let authorized=false;
   try{authorized=await hasAdminAccess(user)}catch(error){console.error(error)}
-  $('#login-view').hidden=authorized;$('#admin-view').hidden=!authorized;
+  $('#login-view').hidden=authorized;$('#admin-view').hidden=!authorized;$('#admin-loading').hidden=true;
   if(!authorized){if(user)await logout();return}
   $('#nav-users').hidden=user.uid!==ADMIN_UID;
   $('#admin-email').textContent=user.email||'Administrateur';
@@ -64,6 +64,7 @@ document.addEventListener('click',event=>{
   const nav=event.target.closest('[data-section],[data-go]');if(nav)section(nav.dataset.section||nav.dataset.go);
   const order=event.target.closest('[data-view-order]');if(order){section('orders');showOrder(order.dataset.viewOrder)}
   const partner=event.target.closest('[data-view-partner]');if(partner){section('partnerships');showPartner(partner.dataset.viewPartner)}
+  const deletePartner=event.target.closest('[data-delete-partner]');if(deletePartner)deletePartnership(deletePartner.dataset.deletePartner);
   const edit=event.target.closest('[data-edit-product]');if(edit)openProduct(productById(edit.dataset.editProduct));
   const del=event.target.closest('[data-delete-product]');if(del)deleteProduct(del.dataset.deleteProduct);
   if(event.target.closest('[data-close-modal]'))closeProduct();
@@ -79,7 +80,17 @@ function showOrder(id){
 }
 function showPartner(id){
   const p=state.partnerships.find(x=>x.id===id);if(!p)return;state.selectedPartner=id;renderPartners();
-  $('#partnership-detail').innerHTML=`<div class="admin-detail-head"><div><span class="admin-kicker">PARTENARIAT · ${esc(p.id)}</span><h2>${esc(p.company)}</h2><small>${date(p.createdAt)}</small></div><span class="admin-status">${esc(p.status||'nouvelle')}</span></div><div class="admin-detail-grid">${detailField('Contact',p.name)}${detailField('Téléphone',p.phone)}${detailField('E-mail',p.email)}${detailField('Activité',p.activity)}${detailField('Wilaya',p.wilaya)}${detailField('Commune',p.commune)}${detailField('Volume envisagé',p.volume)}</div><h3>Produits souhaités</h3><div class="admin-request-products">${(p.products||[]).map(i=>`<div class="admin-item"><img src="${photo(productById(i.id)||{})}" alt=""><span><strong>${esc(i.name)}</strong><small>${esc(productById(i.id)?.format||'')}</small></span></div>`).join('')}</div><h3>Projet / message</h3><div class="note">${esc(p.message||'Aucun détail supplémentaire')}</div><h3>Suivi</h3>${statusSelect('partnerships',p)}`;
+  $('#partnership-detail').innerHTML=`<div class="admin-detail-head"><div><span class="admin-kicker">PARTENARIAT · ${esc(p.id)}</span><h2>${esc(p.company)}</h2><small>${date(p.createdAt)}</small></div><span class="admin-status">${esc(p.status||'nouvelle')}</span></div><div class="admin-detail-grid">${detailField('Contact',p.name)}${detailField('Téléphone',p.phone)}${detailField('E-mail',p.email)}${detailField('Activité',p.activity)}${detailField('Wilaya',p.wilaya)}${detailField('Commune',p.commune)}${detailField('Volume envisagé',p.volume)}</div><h3>Produits souhaités</h3><div class="admin-request-products">${(p.products||[]).map(i=>`<div class="admin-item"><img src="${photo(productById(i.id)||{})}" alt=""><span><strong>${esc(i.name)}</strong><small>${esc(productById(i.id)?.format||'')}</small></span></div>`).join('')}</div><h3>Projet / message</h3><div class="note">${esc(p.message||'Aucun détail supplémentaire')}</div><h3>Suivi</h3>${statusSelect('partnerships',p)}<div class="admin-delete-row"><button type="button" class="admin-secondary admin-danger" data-delete-partner="${esc(p.id)}">Supprimer cette demande</button></div>`;
+}
+async function deletePartnership(id){
+  const request=state.partnerships.find(p=>p.id===id);
+  if(!request||!confirm(`Supprimer définitivement la demande de partenariat de « ${request.company} » ?`))return;
+  try{
+    await removePartnership(id);
+    state.partnerships=state.partnerships.filter(p=>p.id!==id);
+    if(state.selectedPartner===id){state.selectedPartner=null;$('#partnership-detail').innerHTML='<div class="admin-placeholder">Sélectionnez une demande pour afficher ses détails.</div>'}
+    renderAll();toast('Demande de partenariat supprimée.');
+  }catch(reason){toast('Suppression impossible : '+errorMessage(reason))}
 }
 document.addEventListener('change',async event=>{const field=event.target.closest('[data-status-type]');if(!field)return;try{await updateRecord(field.dataset.statusType,field.dataset.statusId,{status:field.value});const record=state[field.dataset.statusType].find(x=>x.id===field.dataset.statusId);record.status=field.value;renderAll();toast('Statut mis à jour.')}catch(reason){toast('Erreur : '+errorMessage(reason))}});
 $('#order-search').addEventListener('input',renderOrders);$('#partner-search').addEventListener('input',renderPartners);

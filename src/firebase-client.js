@@ -41,4 +41,5 @@ export async function revokeAdminUser(uid){if(auth.currentUser?.uid!==ADMIN_UID|
 export async function listCollection(name){const snap=await getDocs(collection(db,name));return snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0))}
 export const saveProduct=(id,data)=>setDoc(doc(db,'products',id),data);
 export const removeProduct=id=>deleteDoc(doc(db,'products',id));
+export const removePartnership=id=>deleteDoc(doc(db,'partnerships',id));
 export const updateRecord=(name,id,data)=>updateDoc(doc(db,name,id),data);
