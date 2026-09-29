@@ -18,11 +18,7 @@ const walkHtml=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})
   if(file!=='dist/admin/index.html'){
     html=html.replace('<a href="/applications/">Applications</a><a href="/a-propos/">','<a href="/applications/">Applications</a><a href="/partenariat/">Partenariat</a><a href="/a-propos/">');
     html=html.replace('<div><h3>BLUE DELTA</h3>','<div><h3>BLUE DELTA</h3><a href="/partenariat/">Partenariat & fournisseurs</a>');
-    html=html.replace('<script type="module" src="/app.js"></script>','<script type="module" src="/app.js?v=2"></script><script type="module" src="/public-extra.js?v=3"></script>');
-    if(file.startsWith('dist/produits/')||file==='dist/produit/index.html'){
-      html=html.replace('<html lang="fr">','<html lang="fr" data-products-pending>');
-      html=html.replace('</head>','<style>html[data-products-pending] main{visibility:hidden}</style><script>setTimeout(()=>document.documentElement.removeAttribute("data-products-pending"),7000)</script></head>');
-    }
+    html=html.replace('<script type="module" src="/app.js"></script>','<script type="module" src="/app.js?v=2"></script><script type="module" src="/public-extra.js?v=5"></script>');
   }
   if(file==='dist/index.html'){
     html=html.replace('<section class="hero"><div class="wrap">','<section class="hero"><div class="hero-slides" aria-hidden="true"><div class="hero-slide active"></div><div class="hero-slide"></div><div class="hero-slide"></div></div><div class="wrap">');

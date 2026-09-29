@@ -1,1 +1,1 @@
-{"name":"bluedelta","private":true,"type":"module","scripts":{"build":"node build.mjs && node prepare-pages.mjs","dev":"node serve.mjs"}}
+{"name":"bluedelta","private":true,"type":"module","scripts":{"build":"node build.mjs && node prepare-pages.mjs","dev":"node serve.mjs","sync:catalog":"node sync-catalog.mjs"}}

@@ -16,7 +16,7 @@ export const auth=getAuth(app);
 export const ADMIN_UID='7Q26B4VGTXddJo9O6rmmOiOhwka2';
 export const imageUrl=p=>p?.image?.startsWith('data:image/')||p?.image?.startsWith('https://')?p.image:'/assets/'+(p?.image||'logo.png');
 export async function loadProducts(fallback){
-  try{const snap=await getDocs(collection(db,'products'));return snap.empty?fallback:snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.active!==false).sort((a,b)=>(a.position??999)-(b.position??999)||a.name.localeCompare(b.name,'fr'))}
+  try{const snap=await getDocs(collection(db,'products'));return snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.active!==false).sort((a,b)=>(a.position??999)-(b.position??999)||a.name.localeCompare(b.name,'fr'))}
   catch(error){console.warn('Catalogue Firebase indisponible, affichage du catalogue local.',error);return fallback}
 }
 export async function submitOrder(payload){return addDoc(collection(db,'orders'),{...payload,status:'nouvelle',createdAt:serverTimestamp()})}
