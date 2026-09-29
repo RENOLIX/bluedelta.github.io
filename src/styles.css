@@ -13,3 +13,66 @@
 .universe h3{text-shadow:0 2px 15px #07142b55}
 @media(max-width:760px){.universe{min-height:350px}.universe img{object-position:60% center}.universe .content{max-width:95%}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Boutons creusés : chaque surface reprend la teinte de son contexte. */
+.btn,.btn.white,.btn.outline,.btn.ghost{
+  --recess-bg:#fff;
+  --recess-dark:#cfd8e3;
+  --recess-light:#fff;
+  --recess-ink:var(--navy);
+  min-height:54px;
+  border:0;
+  border-radius:16px;
+  background:var(--recess-bg);
+  color:var(--recess-ink);
+  box-shadow:inset 8px 8px 16px var(--recess-dark),inset -8px -8px 16px var(--recess-light);
+  transition:color .2s,box-shadow .2s,transform .2s;
+}
+.btn:hover,.btn.white:hover,.btn.outline:hover,.btn.ghost:hover{
+  background:var(--recess-bg);
+  color:var(--blue);
+  transform:translateY(-1px);
+  box-shadow:inset 10px 10px 20px var(--recess-dark),inset -10px -10px 20px var(--recess-light);
+}
+.btn:active,.btn.white:active,.btn.outline:active,.btn.ghost:active{
+  transform:translateY(0);
+  box-shadow:inset 14px 14px 24px var(--recess-dark),inset -14px -14px 24px var(--recess-light);
+}
+.section.gray .btn,.application .btn{
+  --recess-bg:var(--pale);
+  --recess-dark:#d2dce5;
+}
+.form-panel .btn,.order-summary .btn{
+  --recess-bg:#f8fafc;
+  --recess-dark:#d3dce6;
+}
+.hero .btn,.universe .btn{
+  --recess-bg:#102442;
+  --recess-dark:#061326;
+  --recess-light:#2b4965;
+  --recess-ink:#fff;
+}
+.hero .btn:hover,.universe .btn:hover{color:#6dd5ff}
+.cta{
+  box-shadow:inset 16px 16px 28px #0b1430,inset -16px -16px 28px #253760;
+}
+.cta .btn{
+  --recess-bg:var(--navy);
+  --recess-dark:#080f24;
+  --recess-light:#314267;
+  --recess-ink:#fff;
+  min-width:250px;
+}
+.cta .btn:hover{color:#68d2ff}
+.add-btn,.filter{
+  border:0;
+  border-radius:12px;
+  background:#fff;
+  color:var(--navy);
+  box-shadow:inset 5px 5px 9px #d5dde5,inset -5px -5px 9px #fff;
+  transition:color .2s,box-shadow .2s;
+}
+.add-btn:hover,.filter:hover{background:#fff;color:var(--blue);box-shadow:inset 7px 7px 12px #cbd6e0,inset -7px -7px 12px #fff}
+.add-btn:active,.filter:active{box-shadow:inset 10px 10px 16px #cbd6e0,inset -10px -10px 16px #fff}
+.filter.active,.filter.active:hover{background:var(--navy);color:#fff;box-shadow:inset 5px 5px 9px #070e22,inset -5px -5px 9px #334468}
+.wa-float{box-shadow:inset 5px 5px 10px #0a5732,inset -5px -5px 10px #27ac6b}
