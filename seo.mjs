@@ -13,7 +13,7 @@ const business={
   '@context':'https://schema.org','@type':'LocalBusiness','@id':origin+'/#business',
   name:'SARL BLUE DELTA',alternateName:'BLUE DELTA',url:origin+'/',
   description:'Solutions de refroidissement, de protection et de nettoyage pour l’automobile, le BTP et l’industrie en Algérie.',
-  logo:origin+'/assets/logo.png',image:origin+'/assets/hero.png',
+  logo:origin+'/assets/logo.png',image:origin+'/assets/hero-day.png',
   telephone:'+21324937609',email:'contact@bluedelta.dz',
   contactPoint:[{'@type':'ContactPoint',telephone:'+213770866417',contactType:'commercial',areaServed:'DZ',availableLanguage:['fr','ar']},{'@type':'ContactPoint',telephone:'+213557802176',contactType:'commercial',areaServed:'DZ',availableLanguage:['fr','ar']}],
   address:{'@type':'PostalAddress',streetAddress:'Rue Amirat Abdelkader',addressLocality:'Ouled Moussa',addressRegion:'Boumerdès',addressCountry:'DZ'},
@@ -35,7 +35,7 @@ function visit(directory){
     const title=html.match(/<title>(.*?)<\/title>/)?.[1]||'BLUE DELTA';
     const description=html.match(/<meta name="description" content="([^"]*)">/)?.[1]||'';
     const product=route.startsWith('produits/')?byId.get(route.split('/')[1]):undefined;
-    const image=product?origin+'/assets/'+product.image:origin+'/assets/hero.png';
+    const image=product?origin+'/assets/'+product.image:origin+'/assets/hero-day.png';
     const graph=[business,{'@type':'WebPage','@id':url+'#webpage',url,name:title.replaceAll('&amp;','&'),description:description.replaceAll('&amp;','&'),inLanguage:'fr-DZ',isPartOf:{'@id':origin+'/#website'},about:{'@id':origin+'/#business'}}];
     if(product)graph.push({'@type':'Product','@id':url+'#product',name:product.name,description:product.description||'',image:[image],sku:product.id,brand:{'@type':'Brand',name:'BLUE DELTA'},category:product.cat==='industrie'?'Industrie et maintenance':'Automobile et BTP',offers:{'@type':'Offer',url,price:String(product.price),priceCurrency:'DZD',availability:product.stock===0?'https://schema.org/OutOfStock':'https://schema.org/InStock',seller:{'@id':origin+'/#business'}}});
     graph.unshift({'@type':'WebSite','@id':origin+'/#website',url:origin+'/',name:'BLUE DELTA',publisher:{'@id':origin+'/#business'},inLanguage:'fr-DZ'});
