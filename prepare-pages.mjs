@@ -18,10 +18,10 @@ fs.copyFileSync('src/admin.html','dist/admin/index.html');
 const walkHtml=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const file=dir+'/'+entry.name;if(entry.isDirectory())walkHtml(file);else if(file.endsWith('.html')){
   let html=fs.readFileSync(file,'utf8');
   if(file!=='dist/admin/index.html'){
-    html=html.replace('/styles.css?v=5','/styles.css?v=7');
+    html=html.replace('/styles.css?v=5','/styles.css?v=8');
     html=html.replace('<a href="/applications/">Applications</a><a href="/a-propos/">','<a href="/applications/">Applications</a><a href="/partenariat/">Partenariat</a><a href="/a-propos/">');
     html=html.replace('<div><h3>BLUE DELTA</h3>','<div><h3>BLUE DELTA</h3><a href="/partenariat/">Partenariat & fournisseurs</a>');
-    html=html.replace('<script type="module" src="/app.js"></script>','<script type="module" src="/app.js?v=2"></script><script type="module" src="/public-extra.js?v=5"></script>');
+    html=html.replace('<script type="module" src="/app.js"></script>','<script type="module" src="/app.js?v=2"></script><script type="module" src="/public-extra.js?v=6"></script>');
   }
   if(file==='dist/index.html'){
     html=html.replace('<section class="hero"><div class="wrap">','<section class="hero"><div class="hero-slides" aria-hidden="true"><div class="hero-slide active"></div><div class="hero-slide"></div><div class="hero-slide"></div></div><div class="wrap">');

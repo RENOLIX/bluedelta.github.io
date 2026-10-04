@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /commande/
-Disallow: /panier/
-Disallow: /produit/
 Sitemap: https://bluedelta.dz/sitemap.xml

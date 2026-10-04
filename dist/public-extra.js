@@ -34,7 +34,8 @@ function card(p){
 const grid=$('#catalog-grid')||$('.product-grid');
 if(grid){
   let displayed=products;
-  if(location.pathname==='/')displayed=[products[0],products[2],products[8],products[10]].filter(Boolean);
+  if(grid.dataset.guideProducts)displayed=products.filter(p=>grid.dataset.guideProducts.split(',').includes(p.id));
+  else if(location.pathname==='/')displayed=[products[0],products[2],products[8],products[10]].filter(Boolean);
   else if(location.pathname.startsWith('/produits/')&&location.pathname!=='/produits/'){
     const id=location.pathname.split('/')[2];const current=byId[id];
     if(current)displayed=products.filter(p=>p.cat===current.cat&&p.id!==id).slice(0,4);
