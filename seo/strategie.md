@@ -14,7 +14,7 @@ L’eau distillée est un sujet informatif : aucune référence distincte n’es
 
 Les 300 candidats sont répartis en six listes de 50 expressions distinctes. Les contrôles locaux vérifient les titres et descriptions uniques, les H1 des pages statiques, les liens, le JSON-LD et la présence des guides au sitemap. Les six guides et leur index sont accessibles en production. Le rendu a été contrôlé sur ordinateur et à 390 pixels de large.
 
-La propriété Search Console BLUE DELTA est accessible. Le 4 octobre 2026, l’inspection de l’accueil indique « Cette URL est sur Google » et le test en ligne indique « Google a accès à cette URL ». Le sitemap a été soumis ; Google a confirmé l’envoi, puis affiché « Impossible de récupérer le sitemap ». Le serveur public renvoie pourtant HTTP 200 et un XML valide. La récupération par Google reste à confirmer : ne pas confondre soumission et traitement réussi.
+La propriété Search Console BLUE DELTA est accessible. Le 4 octobre 2026, l’inspection de l’accueil indique « Cette URL est sur Google » et le test en ligne indique « Google a accès à cette URL ». Après une première erreur de récupération, une nouvelle soumission du sitemap affiche « Opération effectuée » et 27 pages découvertes. La demande d’indexation du guide sur le liquide industriel a été acceptée et ajoutée à la file d’exploration prioritaire. La découverte des pages et l’acceptation de cette demande ne prouvent pas encore l’indexation des nouveaux guides ni leur classement.
 
 Les trois photos du hero ont été encodées en WebP, à dimensions et composition conservées : environ 1,07 Mo au total au lieu de 7,47 Mo, soit 86 % de moins. La première image est préchargée. Ce gain de poids ne constitue pas une mesure des Core Web Vitals.
 
