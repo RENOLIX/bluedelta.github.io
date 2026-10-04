@@ -10,7 +10,15 @@ Le fichier `mots-cles.csv` contient 50 propositions par thème : liquide industr
 
 L’eau distillée est un sujet informatif : aucune référence distincte n’est actuellement au catalogue. Les systèmes complets et groupes froids ne sont pas annoncés comme vendus. Aucune pureté, certification, capacité IBC ou homologation non documentée n’a été ajoutée. Les coordonnées géographiques non vérifiées ont été retirées du balisage ; l’adresse et le lien Maps sont conservés. Quand le stock n’est pas connu, le balisage ne déclare plus arbitrairement InStock.
 
-## Suivi Google à réaliser dans le compte propriétaire
+## Vérifications effectuées
+
+Les 300 candidats sont répartis en six listes de 50 expressions distinctes. Les contrôles locaux vérifient les titres et descriptions uniques, les H1 des pages statiques, les liens, le JSON-LD et la présence des guides au sitemap. Les six guides et leur index sont accessibles en production. Le rendu a été contrôlé sur ordinateur et à 390 pixels de large.
+
+La propriété Search Console BLUE DELTA est accessible. Le 4 octobre 2026, l’inspection de l’accueil indique « Cette URL est sur Google » et le test en ligne indique « Google a accès à cette URL ». Le sitemap a été soumis ; Google a confirmé l’envoi, puis affiché « Impossible de récupérer le sitemap ». Le serveur public renvoie pourtant HTTP 200 et un XML valide. La récupération par Google reste à confirmer : ne pas confondre soumission et traitement réussi.
+
+Les trois photos du hero ont été encodées en WebP, à dimensions et composition conservées : environ 1,07 Mo au total au lieu de 7,47 Mo, soit 86 % de moins. La première image est préchargée. Ce gain de poids ne constitue pas une mesure des Core Web Vitals.
+
+## Suivi Google à poursuivre dans le compte propriétaire
 
 1. Dans Google Search Console, sélectionner la propriété `https://bluedelta.dz/` ou le domaine `bluedelta.dz`. Le fichier de vérification existant est conservé.
 2. Soumettre `https://bluedelta.dz/sitemap.xml` dans Sitemaps. Une soumission réussie ne garantit ni l’indexation immédiate ni une position.

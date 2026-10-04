@@ -101,9 +101,9 @@
 .hero-slides,.hero-slide{position:absolute;inset:0}
 .hero-slide{opacity:0;background-size:cover;background-position:center;transition:opacity .6s ease}
 .hero-slide.active{opacity:1}
-.hero-slide:nth-child(1){background-image:url('/assets/hero-day.png')}
-.hero-slide:nth-child(2){background-image:url('/assets/hero-trucks-day.png')}
-.hero-slide:nth-child(3){background-image:url('/assets/hero-btp-day.png')}
+.hero-slide:nth-child(1){background-image:url('/assets/hero-day.webp')}
+.hero-slide:nth-child(2){background-image:url('/assets/hero-trucks-day.webp')}
+.hero-slide:nth-child(3){background-image:url('/assets/hero-btp-day.webp')}
 .hero:before{background:linear-gradient(90deg,rgba(6,18,37,.88),rgba(6,18,37,.53) 47%,rgba(6,18,37,.03) 85%)}
 .hero:before{z-index:1}
 .hero>.wrap{position:relative;z-index:2}
@@ -111,7 +111,7 @@
 .hero-dot{width:27px;height:7px;border:0;border-radius:8px;background:#ffffff72;box-shadow:none;padding:0;transition:width .3s,background .3s}
 .hero-dot.active{width:46px;background:#52c9f6}
 .hero-dot:focus-visible{outline:2px solid white;outline-offset:5px}
-.partner-hero{min-height:505px;display:flex;align-items:center;color:#fff;background:linear-gradient(90deg,#07172ce8,#07172c8a 52%,#07172c22),url('/assets/hero-trucks-day.png') center/cover}
+.partner-hero{min-height:505px;display:flex;align-items:center;color:#fff;background:linear-gradient(90deg,#07172ce8,#07172c8a 52%,#07172c22),url('/assets/hero-trucks-day.webp') center/cover}
 .partner-hero .wrap{padding:85px 0}
 .partner-hero .eyebrow{color:#6ad2fa}
 .partner-hero h1{font-size:clamp(3.5rem,7vw,7rem);max-width:900px}
