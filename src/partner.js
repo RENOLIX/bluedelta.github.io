@@ -1,4 +1,5 @@
-import {loadProducts,submitPartnership,imageUrl} from './firebase-client.js';
+import {loadProducts,localCatalog,imageUrl} from './catalog-client.js?v=1';
+const submitPartnership=async payload=>(await import('./firebase-client.js?v=4')).submitPartnership(payload);
 
 async function notifyWeb3Forms(payload,reference){
   const data=new FormData();
@@ -14,7 +15,7 @@ async function notifyWeb3Forms(payload,reference){
 const form=document.querySelector('#partner-form');
 if(form){
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const local=await fetch('/products.json').then(r=>r.json());
+  const local=await localCatalog;
   const products=await loadProducts(local);
   document.querySelector('#partner-products').innerHTML=products.map(p=>`<label class="partner-product"><input type="checkbox" name="products" value="${esc(p.id)}"><img src="${esc(imageUrl(p))}" alt=""><span><strong>${esc(p.name)}</strong><small>${esc(p.format||'')} · ${p.cat==='industrie'?'Industrie':'Automobile & BTP'}</small></span></label>`).join('');
   const locations=await fetch('/locations.json').then(r=>r.json());

@@ -14,7 +14,7 @@ const business={
   '@context':'https://schema.org','@type':'LocalBusiness','@id':origin+'/#business',
   name:'SARL BLUE DELTA',alternateName:'BLUE DELTA',url:origin+'/',
   description:'Solutions de refroidissement, de protection et de nettoyage pour l’automobile, le BTP et l’industrie en Algérie.',
-  logo:origin+'/assets/logo.png',image:origin+'/assets/hero-day.webp',
+  logo:origin+'/assets/logo.webp',image:origin+'/assets/hero-day.webp',
   telephone:'+21324937609',email:'contact@bluedelta.dz',
   contactPoint:[{'@type':'ContactPoint',telephone:'+213770866417',contactType:'commercial',areaServed:'DZ',availableLanguage:['fr','ar']},{'@type':'ContactPoint',telephone:'+213557802176',contactType:'commercial',areaServed:'DZ',availableLanguage:['fr','ar']}],
   address:{'@type':'PostalAddress',streetAddress:'Rue Amirat Abdelkader',addressLocality:'Ouled Moussa',addressRegion:'Boumerdès',addressCountry:'DZ'},
@@ -50,7 +50,7 @@ function visit(directory){
       if(guides.length)html=html.replace('</main>',`<section class="section"><div class="wrap"><div class="eyebrow">Pour aller plus loin</div><h2>Choix et entretien : nos guides</h2><div class="guide-links">${guides.map(t=>`<a href="/guides/${t.slug}/">${t.label} →</a>`).join('')}</div></div></section></main>`);
     }
     if(!segment)html=html.replace('</main>',`<section class="section"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Conseils techniques</div><h2>Comprendre. Choisir. Préserver.</h2></div><a class="textlink" href="/guides/">Tous nos guides →</a></div><div class="guide-links">${topics.map(t=>`<a href="/guides/${t.slug}/">${t.label} →</a>`).join('')}</div><p>Choisir votre liquide industriel, comprendre la différence entre eau déminéralisée et eau distillée, préparer un détartrage : retrouvez les points à vérifier pour votre application.</p></div></section></main>`);
-    if(!segment)html=html.replace('</head>','<link rel="preload" as="image" type="image/webp" href="/assets/hero-day.webp" fetchpriority="high"></head>');
+    if(!segment)html=html.replace('</head>','<link rel="preload" as="image" type="image/webp" href="/assets/hero-day.webp" media="(min-width:761px)" fetchpriority="high"><link rel="preload" as="image" type="image/webp" href="/assets/hero-day-mobile.webp" media="(max-width:760px)" fetchpriority="high"></head>');
     const title=html.match(/<title>(.*?)<\/title>/)?.[1]||'BLUE DELTA';
     const description=html.match(/<meta name="description" content="([^"]*)">/)?.[1]||'';
     const image=origin+'/assets/'+(product?.image||guide?.image||'hero-day.webp');
