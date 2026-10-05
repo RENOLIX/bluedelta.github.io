@@ -39,7 +39,7 @@ async function readProducts(fallback) {
       if (!saved?.imageHash || !p.image || !crypto.subtle) return;
       const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p.image));
       const hash = [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
-      if (hash === saved.imageHash) { p.image = saved.image; p.imageHash = hash; }
+      if (hash === saved.imageHash) { p.image = saved.image; p.imageHash = hash; for(const key of ['thumbnail','thumbnailWidth','thumbnailHash','imageWidth','imageHeight'])if(saved[key]!==undefined)p[key]=saved[key]; }
     }));
     return products.sort((a,b) => (a.position ?? 999) - (b.position ?? 999) || String(a.name).localeCompare(String(b.name), 'fr'));
   } catch {

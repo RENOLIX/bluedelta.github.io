@@ -139,9 +139,12 @@
 
 /* Hero à trois ambiances, avec défilement accessible. */
 .hero{background-image:none}
-.hero-slides,.hero-slide{position:absolute;inset:0}
-.hero-slide{opacity:0;background-size:cover;background-position:center;transition:opacity .6s ease}
-.hero-slide.active{opacity:1}
+.hero-slides,.hero-track,.hero-slide{position:absolute;inset:0}
+.hero-slides{overflow:hidden}
+.hero-track{transition:transform .6s ease;will-change:transform}
+.hero-slide{background-size:cover;background-position:center}
+.hero-slide:nth-child(2){left:100%;right:-100%}
+.hero-slide:nth-child(3){left:200%;right:-200%}
 .hero-slide:nth-child(1){background-image:url('/assets/hero-day.webp')}
 
 
@@ -196,3 +199,4 @@
 .location-section{background:#f1f6fa}.location-grid{display:grid;grid-template-columns:minmax(300px,.85fr) minmax(360px,1.15fr);gap:clamp(28px,5vw,80px);align-items:center}.location-copy h2{max-width:520px}.location-copy>p{max-width:540px;margin:22px 0;color:#526477}.location-copy address{font-style:normal;font-weight:700;line-height:1.7;color:#142542;padding-left:16px;border-left:3px solid #35b9ee}.location-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.location-map{overflow:hidden;background:#fff;border:1px solid #d8e5ee;box-shadow:0 20px 55px #10284914}.location-map iframe{display:block;width:100%;height:390px;border:0}.location-map>a{display:block;padding:12px 18px;color:#087fbd;font-size:13px;font-weight:700;text-align:right}.location-map>a:hover{text-decoration:underline}@media(max-width:760px){.location-grid{grid-template-columns:1fr}.location-map iframe{height:300px}.location-actions .btn{width:100%}}
 
 @media(max-width:760px){.hero-slide:nth-child(1){background-image:url('/assets/hero-day-mobile.webp')}}
+@media(prefers-reduced-motion:reduce){.hero-track{transition:none}}

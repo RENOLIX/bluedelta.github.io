@@ -15,4 +15,5 @@ const originalProducts = [
 ].map(p=>({...common,...p}));
 const snapshot=JSON.parse(fs.readFileSync('catalog-snapshot.json','utf8'));
 const originalById=Object.fromEntries(originalProducts.map(p=>[p.id,p]));
-export const products=snapshot.map(p=>({...originalById[p.id],...p,benefits:p.benefits||originalById[p.id]?.benefits||[],tag:p.tag||p.format||'',tech:p.tech||'À confirmer',color:p.color||'À confirmer',temp:p.temp||'À confirmer'}));
+const variants=fs.existsSync('image-variants.json')?JSON.parse(fs.readFileSync('image-variants.json','utf8')):{};
+export const products=snapshot.map(p=>({...originalById[p.id],...p,...(variants[p.id]?.thumbnailHash===p.imageHash?variants[p.id]:{}),benefits:p.benefits||originalById[p.id]?.benefits||[],tag:p.tag||p.format||'',tech:p.tech||'À confirmer',color:p.color||'À confirmer',temp:p.temp||'À confirmer'}));

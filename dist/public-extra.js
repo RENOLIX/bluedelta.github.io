@@ -1,4 +1,4 @@
-import {loadProducts,localCatalog,imageUrl} from './catalog-client.js?v=1';
+import {loadProducts,localCatalog,imageUrl} from './catalog-client.js?v=2';
 const submitOrder=async payload=>(await import('./firebase-client.js?v=4')).submitOrder(payload);
 
 const $=selector=>document.querySelector(selector);
@@ -48,7 +48,8 @@ const photo=p=>esc(imageUrl(p));
 const isOut=p=>Number.isInteger(p.stock)&&p.stock<=0;
 
 function card(p){
-  return `<article class="product-card" data-cat="${esc(p.cat)}" data-name="${esc((p.name+' '+(p.subtitle||'')).toLowerCase())}"><a class="product-picture" href="${detailUrl(p)}"><span class="pill">${esc(p.format||'Produit')}</span><img src="${photo(p)}" alt="${esc(p.name)} BLUE DELTA" loading="lazy"></a><div class="card-copy"><div class="card-cat">${p.cat==='industrie'?'Industrie':'Automobile & BTP'}</div><h3><a href="${detailUrl(p)}">${esc(p.name)}</a></h3><p>${esc(p.subtitle||'')}</p><div class="card-bottom"><span class="price">${money(p.price)}</span><button class="add-btn" data-add="${esc(p.id)}" aria-label="Ajouter ${esc(p.name)} au panier" ${isOut(p)?'disabled title="Rupture de stock"':''}>+</button></div>${isOut(p)?'<small class="stock-badge">Rupture de stock</small>':''}</div></article>`;
+  const responsive=p.thumbnail?`srcset="/assets/${esc(p.thumbnail)} ${p.thumbnailWidth}w, ${photo(p)} ${p.imageWidth}w" sizes="(max-width:600px) 44vw, (max-width:900px) 40vw, 22vw"`:'';
+  return `<article class="product-card" data-cat="${esc(p.cat)}" data-name="${esc((p.name+' '+(p.subtitle||'')).toLowerCase())}"><a class="product-picture" href="${detailUrl(p)}"><span class="pill">${esc(p.format||'Produit')}</span><img src="${p.thumbnail?'/assets/'+esc(p.thumbnail):photo(p)}" ${responsive} alt="${esc(p.name)} BLUE DELTA" loading="lazy" width="300" height="350"></a><div class="card-copy"><div class="card-cat">${p.cat==='industrie'?'Industrie':'Automobile & BTP'}</div><h3><a href="${detailUrl(p)}">${esc(p.name)}</a></h3><p>${esc(p.subtitle||'')}</p><div class="card-bottom"><span class="price">${money(p.price)}</span><button class="add-btn" data-add="${esc(p.id)}" aria-label="Ajouter ${esc(p.name)} au panier" ${isOut(p)?'disabled title="Rupture de stock"':''}>+</button></div>${isOut(p)?'<small class="stock-badge">Rupture de stock</small>':''}</div></article>`;
 }
 
 const grid=$('#catalog-grid')||$('.product-grid');

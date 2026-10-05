@@ -1,4 +1,4 @@
-import {loadProducts,localCatalog,imageUrl} from './catalog-client.js?v=1';
+import {loadProducts,localCatalog,imageUrl} from './catalog-client.js?v=2';
 const submitPartnership=async payload=>(await import('./firebase-client.js?v=4')).submitPartnership(payload);
 
 async function notifyWeb3Forms(payload,reference){

@@ -1,0 +1,72 @@
+{
+  "oatec-vert": {
+    "thumbnail": "thumb-oatec-vert.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 720,
+    "imageHeight": 1080,
+    "thumbnailHash": "0d2f812fe1919262ea7bfa06e793e8f9e348c582682d51c0d880ffe555378d54"
+  },
+  "oatec-jaune": {
+    "thumbnail": "thumb-oatec-jaune.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 720,
+    "imageHeight": 1080,
+    "thumbnailHash": "ed894d40d5e8f62d180855aba2c1443c2f9d35eab610719262fec14625616eba"
+  },
+  "g12-rose": {
+    "thumbnail": "thumb-g12-rose.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 512,
+    "imageHeight": 640,
+    "thumbnailHash": "aeb085906a739a1ac4538697ea8fb87ce212f034ae779c114dd563ea875e4166"
+  },
+  "full-protect": {
+    "thumbnail": "thumb-full-protect.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 512,
+    "imageHeight": 640,
+    "thumbnailHash": "d40683f304c136737f8c56aaabaf1656b4a63553bc9e4058ed0ee172fcd7071b"
+  },
+  "eau-demineralisee": {
+    "thumbnail": "thumb-eau-demineralisee.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 512,
+    "imageHeight": 640,
+    "thumbnailHash": "ea319e07c0618a00e936124871c9f8e24bdf0e659731506f3487d3a5d14fa04f"
+  },
+  "refroidissement-industriel": {
+    "thumbnail": "thumb-refroidissement-industriel.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 512,
+    "imageHeight": 640,
+    "thumbnailHash": "05634b2bc9b8777b0cd2b62272819774384ad852bc650ed25ce3e8441e30fde0"
+  },
+  "refroidissement-cuve": {
+    "thumbnail": "thumb-refroidissement-cuve.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 512,
+    "imageHeight": 640,
+    "thumbnailHash": "5f4c132df0cd594738ec40acea16f6470716d9389ef896757f2bed53491aea06"
+  },
+  "antitartre-20l": {
+    "thumbnail": "thumb-antitartre-20l.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 512,
+    "imageHeight": 640,
+    "thumbnailHash": "89b01db36f1d441ee8ab5134826791729248bd0bb534bddfa54f31ad43a544dd"
+  },
+  "antitartre-cuve": {
+    "thumbnail": "thumb-antitartre-cuve.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 512,
+    "imageHeight": 640,
+    "thumbnailHash": "664506f454713d7e0e7ae45393e4f7e389c24a43ccc10a60105c251765b3836c"
+  },
+  "decapant": {
+    "thumbnail": "thumb-decapant.webp",
+    "thumbnailWidth": 360,
+    "imageWidth": 512,
+    "imageHeight": 640,
+    "thumbnailHash": "0426554a72ef799aeebf42e0f9b756ffe51a22038da28b98fa6734b5b736d5ce"
+  }
+}
