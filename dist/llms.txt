@@ -1,15 +1,35 @@
 # BLUE DELTA
 
-BLUE DELTA est une entreprise à Ouled Moussa, Boumerdès, Algérie. Elle propose des produits de refroidissement, de protection et de nettoyage pour l’automobile, le BTP et l’industrie.
+> Solutions de refroidissement, de protection anticorrosion et de nettoyage pour l’automobile, le BTP et l’industrie en Algérie.
 
-- Site officiel : https://bluedelta.dz/
-- Catalogue : https://bluedelta.dz/produits/
-- Applications : https://bluedelta.dz/applications/
-- Partenariat et fourniture : https://bluedelta.dz/partenariat/
-- Contact et localisation : https://bluedelta.dz/contact/
-- Carte : https://maps.app.goo.gl/y1R1cGbHGoQCWba16
-- Adresse : Rue Amirat Abdelkader, Ouled Moussa, Boumerdès, Algérie
-- Téléphone : 024 93 76 09 ; mobiles : 0770 86 64 17 et 0557 80 21 76
-- Courriel : contact@bluedelta.dz
+BLUE DELTA est une entreprise située à Ouled Moussa, dans la wilaya de Boumerdès. Les prix affichés sont en dinars algériens (DA). La livraison, la disponibilité et le paiement sont confirmés directement avec BLUE DELTA. Vérifier la compatibilité technique et demander la fiche technique applicable avant utilisation.
 
-Les prix affichés sont en dinars algériens (DA). La livraison, la disponibilité et le paiement sont confirmés directement avec BLUE DELTA. Vérifier la compatibilité technique et demander la fiche technique applicable avant utilisation.
+## Site et catalogue
+
+- [Site officiel](https://bluedelta.dz/): Présentation de BLUE DELTA et de ses deux gammes.
+- [Catalogue des produits](https://bluedelta.dz/produits/): Produits automobiles et industriels, photos, prix et fiches produit.
+- [Applications](https://bluedelta.dz/applications/): Usages automobiles, BTP et maintenance industrielle.
+- [Documentation technique](https://bluedelta.dz/documentation/): Demande de fiches techniques et de fiches de données de sécurité.
+- [Partenariat et distribution](https://bluedelta.dz/partenariat/): Formulaire pour les distributeurs et les approvisionnements professionnels.
+- [Contact et localisation](https://bluedelta.dz/contact/): Coordonnées, devis et carte de localisation.
+
+## Guides techniques
+
+- [Liquide de refroidissement industriel](https://bluedelta.dz/guides/liquide-refroidissement-industriel/): Choix d’un liquide et vérification des caractéristiques techniques.
+- [Protection anticorrosion industrielle](https://bluedelta.dz/guides/protection-anticorrosion-industrielle/): Préservation des circuits et des matériaux.
+- [Eau déminéralisée](https://bluedelta.dz/guides/eau-demineralisee/): Usages techniques et précautions.
+- [Eau distillée](https://bluedelta.dz/guides/eau-distillee/): Différences avec l’eau déminéralisée et disponibilité à confirmer.
+- [Nettoyant antitartre pour canalisations](https://bluedelta.dz/guides/nettoyant-antitartre-canalisations/): Compatibilité, dosage et entretien.
+- [Système de refroidissement industriel](https://bluedelta.dz/guides/systeme-refroidissement-industriel/): Contrôles et maintenance des installations.
+
+## Coordonnées
+
+Adresse : Rue Amirat Abdelkader, Ouled Moussa, Boumerdès, Algérie.
+Téléphone : 024 93 76 09. Mobiles : 0770 86 64 17 et 0557 80 21 76.
+Courriel : contact@bluedelta.dz.
+
+## Optional
+
+- [Localisation Google Maps](https://maps.app.goo.gl/y1R1cGbHGoQCWba16): Itinéraire vers BLUE DELTA à Ouled Moussa.
+- [Politique de confidentialité](https://bluedelta.dz/confidentialite/): Traitement des données des formulaires.
+- [Conditions de commande](https://bluedelta.dz/conditions/): Confirmation de la disponibilité, de la livraison et du paiement.
