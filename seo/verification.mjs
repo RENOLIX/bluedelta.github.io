@@ -32,6 +32,14 @@ for(const product of snapshot){
  const html=fs.readFileSync(`dist/produits/${product.id}/index.html`,'utf8');
  const graph=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])['@graph'];
  assert.equal(Number(graph.find(item=>item['@type']==='Product').offers.price),product.price,product.id+' structured price');
+ const offer=graph.find(item=>item['@type']==='Product').offers;
+ assert.equal(offer.availability,Number.isFinite(product.stock)&&product.stock<=0?'https://schema.org/OutOfStock':'https://schema.org/InStock');
+ assert.equal(offer.shippingDetails.shippingRate.value,0);
+ assert.equal(offer.shippingDetails.shippingRate.currency,offer.priceCurrency);
+ assert.equal(offer.shippingDetails.shippingDestination.addressCountry,'DZ');
+ assert.equal(offer.shippingDetails.deliveryTime.transitTime.maxValue,2);
+ assert.equal(offer.hasMerchantReturnPolicy.merchantReturnDays,14);
+ assert.equal(offer.hasMerchantReturnPolicy.returnFees,'https://schema.org/ReturnFeesCustomerResponsibility');
  const price=html.match(/class="detail-price">([^<]+)/)?.[1]||'';
  assert.ok(normalize(price).startsWith(String(product.price)+'DA'),product.id+' visible price');
  assert.ok(sitemap.includes('/produits/'+product.id+'/'));
@@ -53,6 +61,9 @@ const catalogueHtml=fs.readFileSync('dist/produits/index.html','utf8');
 const catalogueGraph=JSON.parse(catalogueHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])['@graph'];
 assert.equal(catalogueGraph.find(item=>item['@type']==='CollectionPage').mainEntity.itemListElement.length,snapshot.length);
 const rootHtml=fs.readFileSync('dist/index.html','utf8');
+const policyHtml=fs.readFileSync('dist/livraison-retours/index.html','utf8');
+for(const wording of ['48 heures','14 jours','Paiement à réception','livraison des produits BLUE DELTA est gratuite'])assert.ok(policyHtml.includes(wording));
+assert.ok(!fs.readFileSync('dist/conditions/index.html','utf8').includes('unité est de 3 000'));
 for(const topic of topics)assert.ok(rootHtml.includes(`href="/guides/${topic.slug}/"`),'linked from home: '+topic.slug);
 const activeIds=new Set(snapshot.map(product=>product.id));
 for(const entry of fs.readdirSync('dist/produits',{withFileTypes:true}).filter(entry=>entry.isDirectory()&&!activeIds.has(entry.name))){

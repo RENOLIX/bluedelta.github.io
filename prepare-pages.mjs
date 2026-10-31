@@ -22,7 +22,7 @@ const walkHtml=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true})
     html=html.replace('/styles.css?v=5','/styles.css?v=11');
     html=html.replace('<a href="/applications/">Applications</a><a href="/a-propos/">','<a href="/applications/">Applications</a><a href="/partenariat/">Partenariat</a><a href="/a-propos/">');
     html=html.replace('<div><h3>BLUE DELTA</h3>','<div><h3>BLUE DELTA</h3><a href="/partenariat/">Partenariat & fournisseurs</a>');
-    html=html.replace('<script type="module" src="/app.js"></script>','<script type="module" src="/app.js?v=4"></script><script type="module" src="/public-extra.js?v=8"></script>');
+    html=html.replace('<script type="module" src="/app.js"></script>','<script type="module" src="/app.js?v=5"></script><script type="module" src="/public-extra.js?v=9"></script>');
   }
   if(file==='dist/index.html'){
     html=html.replace('<section class="hero"><div class="wrap">','<section class="hero"><div class="hero-slides" aria-hidden="true"><div class="hero-track"><div class="hero-slide active"></div><div class="hero-slide"></div><div class="hero-slide"></div></div></div><div class="wrap">');

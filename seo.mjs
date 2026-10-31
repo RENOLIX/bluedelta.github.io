@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {topics} from './seo-topics.mjs';
+import {shippingDetails,merchantReturnPolicy,availability} from './commerce-policy.mjs';
 
 const root='dist';
 const origin=(process.env.SITE_ORIGIN||'https://bluedelta.dz').replace(/\/$/,'');
@@ -18,7 +19,8 @@ const business={
   telephone:'+21324937609',email:'contact@bluedelta.dz',
   contactPoint:[{'@type':'ContactPoint',telephone:'+213770866417',contactType:'commercial',areaServed:'DZ',availableLanguage:['fr','ar']},{'@type':'ContactPoint',telephone:'+213557802176',contactType:'commercial',areaServed:'DZ',availableLanguage:['fr','ar']}],
   address:{'@type':'PostalAddress',streetAddress:'Rue Amirat Abdelkader',addressLocality:'Ouled Moussa',addressRegion:'Boumerdès',addressCountry:'DZ'},
-  hasMap:maps,sameAs:[maps],areaServed:{'@type':'Country',name:'Algérie'}
+  hasMap:maps,sameAs:[maps],areaServed:{'@type':'Country',name:'Algérie'},
+  hasMerchantReturnPolicy:merchantReturnPolicy(origin)
 };
 
 function visit(directory){
@@ -72,7 +74,7 @@ function visit(directory){
     const description=html.match(/<meta name="description" content="([^"]*)">/)?.[1]||'';
     const image=origin+'/assets/'+(product?.image||guide?.image||'hero-day.webp');
     const graph=[business,{'@type':'WebPage','@id':url+'#webpage',url,name:title.replaceAll('&amp;','&'),description:description.replaceAll('&amp;','&'),inLanguage:'fr-DZ',isPartOf:{'@id':origin+'/#website'},about:{'@id':origin+'/#business'}}];
-    if(product)graph.push({'@type':'Product','@id':url+'#product',name:product.name,description:product.description||'',image:[image],sku:product.id,brand:{'@type':'Brand',name:'BLUE DELTA'},category:product.cat==='industrie'?'Industrie et maintenance':'Automobile et BTP',offers:{'@type':'Offer',url,price:String(product.price),priceCurrency:'DZD',...(typeof product.stock==='number'?{availability:product.stock===0?'https://schema.org/OutOfStock':'https://schema.org/InStock'}:{}),seller:{'@id':origin+'/#business'}}});
+    if(product)graph.push({'@type':'Product','@id':url+'#product',name:product.name,description:product.description||'',image:[image],sku:product.id,brand:{'@type':'Brand',name:'BLUE DELTA'},category:product.cat==='industrie'?'Industrie et maintenance':'Automobile et BTP',offers:{'@type':'Offer',url,price:String(product.price),priceCurrency:'DZD',availability:availability(product),shippingDetails:shippingDetails(),hasMerchantReturnPolicy:merchantReturnPolicy(origin),seller:{'@id':origin+'/#business'}}});
     if(route&&route!=='.'){
       const crumbs=[{name:'Accueil',item:origin+'/'}];
       if(product)crumbs.push({name:'Nos produits',item:origin+'/produits/'});
