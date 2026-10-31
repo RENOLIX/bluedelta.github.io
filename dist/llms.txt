@@ -15,6 +15,9 @@ BLUE DELTA est une entreprise située à Ouled Moussa, dans la wilaya de Boumerd
 
 ## Guides techniques
 
+- [Liquide de refroidissement auto en Algérie](https://bluedelta.dz/guides/liquide-refroidissement-auto/): Choix automobile, prix par référence, eau de refroidissement et recherche Glaciol sans équivalence automatique.
+- [Antigel et antifreeze](https://bluedelta.dz/guides/antigel-antifreeze/): Terminologie, concentré ou prêt à l’emploi et protection au gel.
+- [Eau traitée et eaux techniques](https://bluedelta.dz/guides/eau-traitee/): Adoucissement, déminéralisation, osmose et distillation.
 - [Liquide de refroidissement industriel](https://bluedelta.dz/guides/liquide-refroidissement-industriel/): Choix d’un liquide et vérification des caractéristiques techniques.
 - [Protection anticorrosion industrielle](https://bluedelta.dz/guides/protection-anticorrosion-industrielle/): Préservation des circuits et des matériaux.
 - [Eau déminéralisée](https://bluedelta.dz/guides/eau-demineralisee/): Usages techniques et précautions.

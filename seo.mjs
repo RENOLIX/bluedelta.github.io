@@ -29,12 +29,16 @@ function visit(directory){
     const route=path.relative(root,path.dirname(file)).replaceAll('\\','/');
     const segment=!route||route==='.'?'':route+'/';
     const url=origin+'/'+segment;
-    const noindex=['panier','commande','produit'].includes(route);
+    const product=route.startsWith('produits/')?byId.get(route.split('/')[1]):undefined;
+    const noindex=['panier','commande','produit'].includes(route)||(route.startsWith('produits/')&&!product);
     if(!noindex)publicRoutes.push(segment);
     let html=fs.readFileSync(file,'utf8');
-    const product=route.startsWith('produits/')?byId.get(route.split('/')[1]):undefined;
     const guide=topics.find(t=>route==='guides/'+t.slug);
     const productTitles={
+      'oatec-vert':'Liquide de refroidissement OATEC Vert 5 L',
+      'oatec-jaune':'Liquide de refroidissement OATEC Jaune 5 L',
+      'g12-rose':'Liquide de refroidissement G12 Rose 5 L',
+      'full-protect':'Liquide de refroidissement Full Protect 5 L',
       'refroidissement-industriel':'Liquide de refroidissement industriel anticorrosion',
       'refroidissement-cuve':'Liquide de refroidissement industriel en cuve IBC',
       'eau-demineralisee':'Eau déminéralisée 5 L pour usages techniques',
@@ -45,11 +49,24 @@ function visit(directory){
       const optimized=escapeHtml(productTitles[product.id]+' | BLUE DELTA Algérie');
       html=html.replace(/<title>.*?<\/title>/,`<title>${optimized}</title>`).replace(/<meta property="og:title" content="[^"]*">/,`<meta property="og:title" content="${optimized}">`);
     }
+    const pageMetadata={
+      '':['Liquide de refroidissement en Algérie | BLUE DELTA','Liquide de refroidissement auto et industriel, antigel selon référence, eau déminéralisée 5 L. Prix en DA et conseil BLUE DELTA à Ouled Moussa, Boumerdès.'],
+      'produits':['Liquides de refroidissement et eau déminéralisée | BLUE DELTA','Comparez les liquides de refroidissement OATEC, G12 et industriels, l’eau déminéralisée et les antitartres BLUE DELTA en Algérie. Prix par référence en DA.'],
+      'guides':['Guides : liquide de refroidissement, antigel et eau | BLUE DELTA','Choisir un liquide de refroidissement auto, un antigel ou une eau technique en Algérie : guides BLUE DELTA sur les usages, différences et compatibilités.']
+    };
+    if(pageMetadata[route]){
+      const [pageTitle,pageDescription]=pageMetadata[route].map(escapeHtml);
+      html=html.replace(/<title>.*?<\/title>/,`<title>${pageTitle}</title>`)
+        .replace(/<meta property="og:title" content="[^"]*">/,`<meta property="og:title" content="${pageTitle}">`)
+        .replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${pageDescription}">`)
+        .replace(/<meta property="og:description" content="[^"]*">/,`<meta property="og:description" content="${pageDescription}">`);
+    }
+    if(!segment)html=html.replace('Des solutions de refroidissement, de protection et de nettoyage pour vos moteurs et vos installations industrielles.','Liquides de refroidissement auto et industriels, eau déminéralisée et solutions de nettoyage pour vos équipements en Algérie.');
     if(product){
       const guides=topics.filter(t=>t.products.includes(product.id));
       if(guides.length)html=html.replace('</main>',`<section class="section"><div class="wrap"><div class="eyebrow">Pour aller plus loin</div><h2>Choix et entretien : nos guides</h2><div class="guide-links">${guides.map(t=>`<a href="/guides/${t.slug}/">${t.label} →</a>`).join('')}</div></div></section></main>`);
     }
-    if(!segment)html=html.replace('</main>',`<section class="section"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Conseils techniques</div><h2>Comprendre. Choisir. Préserver.</h2></div><a class="textlink" href="/guides/">Tous nos guides →</a></div><div class="guide-links">${topics.map(t=>`<a href="/guides/${t.slug}/">${t.label} →</a>`).join('')}</div><p>Choisir votre liquide industriel, comprendre la différence entre eau déminéralisée et eau distillée, préparer un détartrage : retrouvez les points à vérifier pour votre application.</p></div></section></main>`);
+    if(!segment)html=html.replace('</main>',`<section class="section"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Conseils techniques · Algérie</div><h2>Liquide de refroidissement<br>et eaux techniques.</h2></div><a class="textlink" href="/guides/">Tous nos guides →</a></div><p>Pour une voiture, un atelier ou une installation industrielle, choisissez votre liquide de refroidissement selon la spécification de l’équipement. Antigel, antifreeze et eau de refroidissement : nos guides expliquent ces appellations et les points à vérifier avant de commander.</p><div class="guide-links">${topics.map(t=>`<a href="/guides/${t.slug}/">${t.label} →</a>`).join('')}</div><p>Vous recherchez une eau traitée, déminéralisée ou distillée ? Comparez les procédés et les usages. BLUE DELTA propose une <a class="textlink" href="/produits/eau-demineralisee/">eau déminéralisée 5 L</a> ; l’eau distillée n’est pas une référence distincte du catalogue actuel. Pour un devis en Algérie, précisez votre application, votre volume et votre wilaya à notre équipe à Ouled Moussa, Boumerdès.</p></div></section></main>`);
     if(!segment)html=html.replace('</head>','<link rel="preload" as="image" type="image/webp" href="/assets/hero-day.webp" media="(min-width:761px)" fetchpriority="high"><link rel="preload" as="image" type="image/webp" href="/assets/hero-day-mobile.webp" media="(max-width:760px)" fetchpriority="high"></head>');
     const title=html.match(/<title>(.*?)<\/title>/)?.[1]||'BLUE DELTA';
     const description=html.match(/<meta name="description" content="([^"]*)">/)?.[1]||'';
@@ -67,7 +84,11 @@ function visit(directory){
       graph.push({'@type':'Article','@id':url+'#article',headline:guide.title,description:guide.description,inLanguage:'fr-DZ',mainEntityOfPage:{'@id':url+'#webpage'},author:{'@id':origin+'/#business'},publisher:{'@id':origin+'/#business'},image:origin+'/assets/'+guide.image});
       graph.push({'@type':'FAQPage','@id':url+'#faq',mainEntity:guide.faq.map(([name,text])=>({'@type':'Question',name,acceptedAnswer:{'@type':'Answer',text}}))});
     }
-    if(route==='guides')graph.push({'@type':'CollectionPage',url,name:'Guides techniques BLUE DELTA',mainEntity:{'@type':'ItemList',itemListElement:topics.map((t,i)=>({'@type':'ListItem',position:i+1,name:t.label,url:origin+'/guides/'+t.slug+'/'}))}});
+    if(route==='guides'||route==='produits'){
+      graph[1]['@type']='CollectionPage';
+      const items=route==='guides'?topics.map(t=>({name:t.label,url:origin+'/guides/'+t.slug+'/'})):products.filter(p=>p.active!==false).map(p=>({name:p.name,url:origin+'/produits/'+p.id+'/'}));
+      graph[1].mainEntity={'@type':'ItemList',itemListElement:items.map((item,i)=>({'@type':'ListItem',position:i+1,...item}))};
+    }
     graph.unshift({'@type':'WebSite','@id':origin+'/#website',url:origin+'/',name:'BLUE DELTA',publisher:{'@id':origin+'/#business'},inLanguage:'fr-DZ'});
     const meta=`<meta name="robots" content="${noindex?'noindex,nofollow':'index,follow,max-image-preview:large'}"><meta property="og:locale" content="fr_DZ"><meta property="og:url" content="${escapeHtml(url)}"><meta property="og:image" content="${escapeHtml(image)}"><meta property="og:image:alt" content="${escapeHtml(product?product.name+' BLUE DELTA':'BLUE DELTA, solutions automobiles et industrielles')}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${title}"><meta name="twitter:description" content="${description}"><meta name="twitter:image" content="${escapeHtml(image)}"><link rel="alternate" hreflang="fr-DZ" href="${escapeHtml(url)}">`;
     html=html.replace('<meta name="theme-color"',meta+'<meta name="theme-color"');
@@ -99,6 +120,9 @@ BLUE DELTA est une entreprise située à Ouled Moussa, dans la wilaya de Boumerd
 
 ## Guides techniques
 
+- [Liquide de refroidissement auto en Algérie](${origin}/guides/liquide-refroidissement-auto/): Choix automobile, prix par référence, eau de refroidissement et recherche Glaciol sans équivalence automatique.
+- [Antigel et antifreeze](${origin}/guides/antigel-antifreeze/): Terminologie, concentré ou prêt à l’emploi et protection au gel.
+- [Eau traitée et eaux techniques](${origin}/guides/eau-traitee/): Adoucissement, déminéralisation, osmose et distillation.
 - [Liquide de refroidissement industriel](${origin}/guides/liquide-refroidissement-industriel/): Choix d’un liquide et vérification des caractéristiques techniques.
 - [Protection anticorrosion industrielle](${origin}/guides/protection-anticorrosion-industrielle/): Préservation des circuits et des matériaux.
 - [Eau déminéralisée](${origin}/guides/eau-demineralisee/): Usages techniques et précautions.
